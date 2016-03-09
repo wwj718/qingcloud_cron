@@ -11,7 +11,7 @@ import logging.config
 logging.config.fileConfig('logging.ini',defaults={'logfilename': 'qingcloud_cron.log'})
 
 from send_emails import send_mail
-
+from utils import ApplicationInstance
 # create logger
 
 from qingcloud_setting import zone,qy_access_key_id,qy_secret_access_key
@@ -59,6 +59,7 @@ schedule.every().day.at("16:00").do(stop_instance)
 #schedule.every().wednesday.at("13:15").do(job)
 
 if __name__ == '__main__':
+    ApplicationInstance()  # 保证脚本单例运行
     while True:
         schedule.run_pending()
         time.sleep(1)
